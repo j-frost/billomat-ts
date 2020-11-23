@@ -1,10 +1,11 @@
 # billomat-ts
 
+![npm version](https://img.shields.io/npm/v/billomat-ts)
+![npm bundle size](https://img.shields.io/bundlephobia/min/billomat-ts)
 ![GitHub repo size](https://img.shields.io/github/repo-size/seibert-media/billomat-ts)
-![NPM bundle size](https://img.shields.io/bundlephobia/min/billomat-ts)
 ![GitHub contributors](https://img.shields.io/github/contributors/seibert-media/billomat-ts)
 ![Twitter Follow](https://img.shields.io/twitter/follow/seibertmedia?style=social)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![License](https://img.shields.io/npm/l/billomat-ts)
 
 `billomat-ts` is a library that allows TypeScript developers to connect to the popular online accounting software [Billomat](https://www.billomat.com/).
 
