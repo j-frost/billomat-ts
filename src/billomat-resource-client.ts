@@ -1,10 +1,11 @@
 import * as request from 'superagent';
 import { SuperAgentRequest } from 'superagent';
-import { BillomatResource, BillomatResourceName } from './billomat';
-import { BillomatClientConfig } from './billomat-client';
+import { Billomat } from './billomat';
+import { BillomatApiClientConfig } from './get-billomat-api-client';
 
-export class BillomatResourceClient<T extends BillomatResource> {
-    constructor(private _config: BillomatClientConfig, private _name: BillomatResourceName) {}
+export class BillomatResourceClient<T extends Billomat.Resource> {
+
+    constructor(private _config: BillomatApiClientConfig, private _name: Billomat.ResourceName) {}
 
     public list(query?: { [key: string]: string }): Promise<T[]> {
         return new Promise((resolve, reject) => {
@@ -14,6 +15,10 @@ export class BillomatResourceClient<T extends BillomatResource> {
                     const singular = SINGULAR.get(this._name);
                     if (singular === undefined) {
                         reject('Unsupported resource (no singular defined)');
+                        return;
+                    }
+                    if (!this.isListResponse(response.body)) {
+                        reject(`Invalid list response: ${JSON.stringify(response.body)}`);
                         return;
                     }
                     const returnValue = response.body[this._name][singular] || [];
@@ -32,6 +37,10 @@ export class BillomatResourceClient<T extends BillomatResource> {
                         reject('Unsupported resource (no singular defined)');
                         return;
                     }
+                    if (!this.isGetResponse(response.body)) {
+                        reject(`Invalid get response: ${JSON.stringify(response.body)}`);
+                        return;
+                    }
                     resolve(response.body[singular]);
                 })
                 .catch(reject);
@@ -46,10 +55,16 @@ export class BillomatResourceClient<T extends BillomatResource> {
                 return;
             }
             const payload: any = {};
-            payload[singular]  = resource;
+            Object.defineProperty(payload, singular, resource);
             this.createAuthedRequest('POST', `api/${this._name}`)
                 .send(payload)
-                .then((response) => resolve(response.body[singular]))
+                .then((response) => {
+                    if (!this.isCreateResponse(response.body)) {
+                        reject(`Invalid create response: ${JSON.stringify(response.body)}`);
+                        return;
+                    }
+                    resolve(response.body[singular]);
+                })
                 .catch(reject);
         });
     }
@@ -62,14 +77,34 @@ export class BillomatResourceClient<T extends BillomatResource> {
                 return;
             }
             const payload: any = {};
-            payload[singular]  = resource;
+            Object.defineProperty(payload, singular, resource);
             this.createAuthedRequest('PUT', `api/${this._name}`)
                 .send(payload)
                 .then((response) => {
+                    if (!this.isEditResponse(response.body)) {
+                        reject(`Invalid edit response: ${JSON.stringify(response.body)}`);
+                        return;
+                    }
                     resolve(response.body[singular]);
                 })
                 .catch(reject);
         });
+    }
+
+    private isListResponse(o: unknown): o is Record<string, Record<string, T>> {
+        return typeof o === 'object' && o !== null && this._name in o;
+    }
+
+    private isGetResponse(o: unknown): o is Record<string, T> {
+        return typeof o === 'object' && o !== null;
+    }
+
+    private isCreateResponse(o: unknown): o is Record<string, T> {
+        return typeof o === 'object' && o !== null;
+    }
+
+    private isEditResponse(o: unknown): o is Record<string, T> {
+        return typeof o === 'object' && o !== null;
     }
 
     private createAuthedRequest(method: string, endpoint: string): SuperAgentRequest {
@@ -80,9 +115,10 @@ export class BillomatResourceClient<T extends BillomatResource> {
             .set('X-AppId', this._config.appId || '')
             .set('X-AppSecret', this._config.appSecret || '');
     }
+
 }
 
-const SINGULAR = new Map<BillomatResourceName, string>([
+const SINGULAR = new Map<Billomat.ResourceName, string>([
     ['activity-feed', 'activity'],
     ['articles', 'article'],
     ['clients', 'client'],

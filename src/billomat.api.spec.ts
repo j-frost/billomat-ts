@@ -1,9 +1,11 @@
+// Since we'll be using meta programming extensively to abstract these tests, disable some of our linting rules.
+/* eslint-disable @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access */
 import { expect } from 'chai';
 import * as fs from 'fs';
-// @ts-ignore
 import * as nock from 'nock';
-import { BillomatResourceName } from './billomat';
-import { BILLOMAT_RESOURCE_NAMES, billomatApi } from './billomat.api';
+import { Billomat } from './billomat';
+import { BILLOMAT_RESOURCE_NAMES, getBillomatApiClient } from './get-billomat-api-client';
+import ResourceName = Billomat.ResourceName;
 
 const SINGULAR_OF_RESOURCE = {
     'activity-feed':          'activity',
@@ -26,8 +28,14 @@ const SINGULAR_OF_RESOURCE = {
     users:                    'user',
 };
 
+const isImplemented = (resourceName: ResourceName): boolean => [
+    'clients',
+    'client-property-values',
+    'invoices',
+].includes(resourceName);
+
 describe('Billomat API', () => {
-    const api   = billomatApi({ baseUrl: 'billomat.net', apiKey: 'a valid key' });
+    const api   = getBillomatApiClient({ baseUrl: 'billomat.net', apiKey: 'a valid key' });
     const scope = nock(/billomat.net/);
 
     for (const resources of BILLOMAT_RESOURCE_NAMES.filter(isImplemented)) {
@@ -40,7 +48,7 @@ describe('Billomat API', () => {
                 beforeEach((done: Mocha.Done) => {
                     fs.readFile(require.resolve(`./test-data/${resources}-list-response.json`), 'utf8', (err, data) => {
                         if (err) throw err;
-                        const sample = JSON.parse(data);
+                        const sample = JSON.parse(data) as Record<string, Record<string, any>>;
                         scope.get(new RegExp(`api/${resources}$`))
                             .reply(200, sample);
                         const sampleValue = sample[resources][resource];
@@ -65,8 +73,8 @@ describe('Billomat API', () => {
                 beforeEach((done: Mocha.Done) => {
                     fs.readFile(require.resolve(`./test-data/${resources}-get-response.json`), 'utf8', (err, data) => {
                         if (err) throw err;
-                        const sample = JSON.parse(data);
-                        scope.get(new RegExp(`api/${resources}/${sample[resource].id}$`))
+                        const sample = JSON.parse(data) as Record<string, any>;
+                        scope.get(new RegExp(`api/${resources}/${sample[resource].id as string}$`))
                             .reply(200, sample);
                         expectation = sample[resource];
                         done();
@@ -143,12 +151,3 @@ describe('Billomat API', () => {
         });
     }
 });
-
-function isImplemented(resourceName: BillomatResourceName): boolean {
-    return [
-        'clients',
-        'client-property-values',
-        'invoices',
-        'users',
-    ].includes(resourceName);
-}

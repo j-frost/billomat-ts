@@ -1,74 +1,54 @@
 # billomat-ts
 
-<!--- These are examples. See https://shields.io for others or to customize this set of shields. You might want to include dependencies, project status and licence info here --->
-![GitHub repo size](https://img.shields.io/github/repo-size/scottydocs/README-template.md)
-![GitHub contributors](https://img.shields.io/github/contributors/scottydocs/README-template.md)
-![GitHub stars](https://img.shields.io/github/stars/scottydocs/README-template.md?style=social)
-![GitHub forks](https://img.shields.io/github/forks/scottydocs/README-template.md?style=social)
-![Twitter Follow](https://img.shields.io/twitter/follow/scottydocs?style=social)
+![GitHub repo size](https://img.shields.io/github/repo-size/seibert-media/billomat-ts)
+![NPM bundle size](https://img.shields.io/bundlephobia/min/billomat-ts)
+![GitHub contributors](https://img.shields.io/github/contributors/seibert-media/billomat-ts)
+![Twitter Follow](https://img.shields.io/twitter/follow/seibertmedia?style=social)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Project name is a `<utility/tool/feature>` that allows `<insert_target_audience>` to do `<action/task_it_does>`.
+`billomat-ts` is a library that allows TypeScript developers to connect to the popular online accounting software [Billomat](https://www.billomat.com/).
 
-Additional line of information text about what the project does. Your introduction should be around 2 or 3 sentences. Don't go overboard, people won't read it.
+There's realistic mock data for the [client](https://www.billomat.com/en/api/clients/), [client property value](https://www.billomat.com/en/api/clients/properties/), and [invoice data](https://www.billomat.com/en/api/invoices/) types in Billomat's API. It follows that those data types are most likely to work as expected. All other data types are likely to work well though. If you want to contribute, please read [our contributing guidelines](CONTRIBUTING.md).
 
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
-<!--- These are just example requirements. Add, duplicate or remove as required --->
-* You have installed the latest version of `<coding_language/dependency/requirement_1>`
-* You have a `<Windows/Linux/Mac>` machine. State which OS is supported/which is not.
-* You have read `<guide/link/documentation_related_to_project>`.
+* You have installed the latest version of `node` and `npm`
+* You have read Billomat's own documentation about their API
+* [You have authentication information ready](https://www.billomat.com/en/api/basics/authentication/). [You'll likely want to configure an app inside of Billomat](https://www.billomat.com/en/api/basics/rate-limiting/). Make sure you have the base url to your Billomat instance, and an API key. If you go ahead an configure an app, you can also pass your app secret and app id into `billomat-ts`. 
 
-## Installing <project_name>
+## Installing `billomat-ts`
 
-To install <project_name>, follow these steps:
+To install `billomat-ts`, simply run:
 
-Linux and macOS:
-```
-<install_command>
+```bash
+npm install billomat-ts
 ```
 
-Windows:
+## Using `billomat-ts`
+
+For information on how to use `billomat-ts`, have a look at this example:
+
+```typescript
+import { Billomat, getBillomatApiClient } from 'billomat-ts';
+import { readFileSync } from 'fs';
+
+const config   = JSON.parse(readFileSync('config.json', 'utf-8'));
+const billomat = getBillomatApiClient(config);
+
+billomat.clients.list()
+    .then((clients: Billomat.Client[]) => clients
+        .map((client: Billomat.Client) => client.name)
+        .map((name) => console.log(name)))
+    .catch(console.error);
 ```
-<install_command>
-```
-## Using <project_name>
 
-To use <project_name>, follow these steps:
-
-```
-<usage_example>
-```
-
-Add run commands and examples you think users will find useful. Provide an options reference for bonus points!
-
-## Contributing to <project_name>
-<!--- If your README is long or you have some specific process or steps you want contributors to follow, consider creating a separate CONTRIBUTING.md file--->
-To contribute to <project_name>, follow these steps:
-
-1. Fork this repository.
-2. Create a branch: `git checkout -b <branch_name>`.
-3. Make your changes and commit them: `git commit -m '<commit_message>'`
-4. Push to the original branch: `git push origin <project_name>/<location>`
-5. Create the pull request.
-
-Alternatively see the GitHub documentation on [creating a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
-
-## Contributors
-
-Thanks to the following people who have contributed to this project:
-
-* [@scottydocs](https://github.com/scottydocs) 📖
-* [@cainwatson](https://github.com/cainwatson) 🐛
-* [@calchuchesta](https://github.com/calchuchesta) 🐛
-
-You might want to consider using something like the [All Contributors](https://github.com/all-contributors/all-contributors) specification and its [emoji key](https://allcontributors.org/docs/en/emoji-key).
+`billomat-ts` currently supports `list`, `get`, `create`, and `edit` operations on all known data types. The `list` functions accept query arguments, etc.
 
 ## Contact
 
-If you want to contact me you can reach me at <your_email@address.com>.
+If you want to contact me you can reach me at jrost@seibert-media.net. Also feel free to open an issue if you find a bug or have a question.
 
 ## License
-<!--- If you're not sure which open license to use see https://choosealicense.com/--->
 
-This project uses the following license: [<license_name>](<link>).
+This project uses the [MIT](https://opensource.org/licenses/MIT) license.
