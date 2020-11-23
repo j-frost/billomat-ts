@@ -1,0 +1,35 @@
+{
+  "articles": {
+    "article": {
+      "id": "817280",
+      "created": "2020-05-28T20:42:56+02:00",
+      "updated": "2020-05-28T20:42:56+02:00",
+      "archived": "0",
+      "unit_id": "",
+      "article_number": "ART1",
+      "number": "1",
+      "number_pre": "ART",
+      "number_length": "0",
+      "type": "SERVICE",
+      "title": "",
+      "description": "",
+      "sales_price": "",
+      "sales_price2": "",
+      "sales_price3": "",
+      "sales_price4": "",
+      "sales_price5": "",
+      "currency_code": "EUR",
+      "tax_id": "84496",
+      "revenue_account_number": "",
+      "cost_center": "",
+      "purchase_price": "",
+      "purchase_price_net_gross": "NET",
+      "supplier_id": "",
+      "customfield": "",
+      "article-property-values": ""
+    },
+    "@page": "1",
+    "@per_page": "100",
+    "@total": "1"
+  }
+}

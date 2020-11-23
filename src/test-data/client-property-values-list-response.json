@@ -1,0 +1,36 @@
+{
+  "client-property-values": {
+    "client-property-value": [
+      {
+        "id": "6529900",
+        "client_id": "3527529",
+        "client_property_id": "16022",
+        "type": "TEXTFIELD",
+        "name": "G Suite Domain",
+        "value": "example.com",
+        "customfield": ""
+      },
+      {
+        "id": "6529911",
+        "client_id": "3558064",
+        "client_property_id": "16022",
+        "type": "TEXTFIELD",
+        "name": "G Suite Domain",
+        "value": "seibert-demo.net",
+        "customfield": ""
+      },
+      {
+        "id": "6529922",
+        "client_id": "3558068",
+        "client_property_id": "16022",
+        "type": "TEXTFIELD",
+        "name": "G Suite Domain",
+        "value": "seibert-demo.neth",
+        "customfield": ""
+      }
+    ],
+    "@page": "1",
+    "@per_page": "100",
+    "@total": "3"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "activity-feed": {
+    "activity": {
+      "resource": "invoices",
+      "id": "7104183",
+      "date": "2020-05-15T17:21:55+02:00",
+      "title": "Rechnung",
+      "text": "Rechnung erstellt.",
+      "user_id": "92673"
+    },
+    "@page": "1",
+    "@per_page": "100",
+    "@total": "1"
+  }
+}
