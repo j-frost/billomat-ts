@@ -4,7 +4,6 @@ import { Billomat } from './billomat';
 import { BillomatApiClientConfig } from './get-billomat-api-client';
 
 export class BillomatResourceClient<T extends Billomat.Resource> {
-
     constructor(private _config: BillomatApiClientConfig, private _name: Billomat.ResourceName) {}
 
     public list(query?: { [key: string]: string }): Promise<T[]> {
@@ -54,7 +53,7 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
                 reject('Unsupported resource (no singular defined)');
                 return;
             }
-            const payload: any = {};
+            const payload = {};
             Object.defineProperty(payload, singular, resource);
             this.createAuthedRequest('POST', `api/${this._name}`)
                 .send(payload)
@@ -76,7 +75,7 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
                 reject('Unsupported resource (no singular defined)');
                 return;
             }
-            const payload: any = {};
+            const payload = {};
             Object.defineProperty(payload, singular, resource);
             this.createAuthedRequest('PUT', `api/${this._name}`)
                 .send(payload)
@@ -115,7 +114,6 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
             .set('X-AppId', this._config.appId || '')
             .set('X-AppSecret', this._config.appSecret || '');
     }
-
 }
 
 const SINGULAR = new Map<Billomat.ResourceName, string>([

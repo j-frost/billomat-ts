@@ -31,14 +31,19 @@ export interface MappedBillomatResourceType {
     [name: string]: Billomat.Resource;
 }
 
-export type BillomatApiClient = { [key in Billomat.ResourceName]: BillomatResourceClient<MappedBillomatResourceType[key]> };
+export type BillomatApiClient = {
+    [key in Billomat.ResourceName]: BillomatResourceClient<MappedBillomatResourceType[key]>;
+};
 
 export const getBillomatApiClient = (config: BillomatApiClientConfig): BillomatApiClient => {
     const api = {} as BillomatApiClient; // because we're going to modify it right below
     for (const resource of BILLOMAT_RESOURCE_NAMES) {
         Object.defineProperty(api, resource, {
             get: () => {
-                return new BillomatResourceClient<MappedBillomatResourceType[typeof resource]>(config, resource);
+                return new BillomatResourceClient<MappedBillomatResourceType[typeof resource]>(
+                    config,
+                    resource
+                );
             },
         });
     }
@@ -46,8 +51,8 @@ export const getBillomatApiClient = (config: BillomatApiClientConfig): BillomatA
 };
 
 export interface BillomatApiClientConfig {
-    baseUrl: string,
+    baseUrl: string;
     apiKey: string;
-    appSecret?: string,
-    appId?: string,
+    appSecret?: string;
+    appId?: string;
 }

@@ -8,34 +8,31 @@ import { BILLOMAT_RESOURCE_NAMES, getBillomatApiClient } from './get-billomat-ap
 import ResourceName = Billomat.ResourceName;
 
 const SINGULAR_OF_RESOURCE = {
-    'activity-feed':          'activity',
-    articles:                 'article',
+    'activity-feed': 'activity',
+    articles: 'article',
     'client-property-values': 'client-property-value',
-    clients:                  'client',
-    confirmations:            'confirmation',
-    countries:                'country',
-    'credit-notes':           'credit-note',
-    currencies:               'currency',
-    'delivery-notes':         'delivery-note',
-    estimates:                'estimate',
-    incomings:                'incoming',
-    invoices:                 'invoice',
-    letters:                  'letter',
-    recurrings:               'recurring',
-    reminders:                'reminder',
-    search:                   'result',
-    suppliers:                'supplier',
-    users:                    'user',
+    clients: 'client',
+    confirmations: 'confirmation',
+    countries: 'country',
+    'credit-notes': 'credit-note',
+    currencies: 'currency',
+    'delivery-notes': 'delivery-note',
+    estimates: 'estimate',
+    incomings: 'incoming',
+    invoices: 'invoice',
+    letters: 'letter',
+    recurrings: 'recurring',
+    reminders: 'reminder',
+    search: 'result',
+    suppliers: 'supplier',
+    users: 'user',
 };
 
-const isImplemented = (resourceName: ResourceName): boolean => [
-    'clients',
-    'client-property-values',
-    'invoices',
-].includes(resourceName);
+const isImplemented = (resourceName: ResourceName): boolean =>
+    ['clients', 'client-property-values', 'invoices'].includes(resourceName);
 
 describe('Billomat API', () => {
-    const api   = getBillomatApiClient({ baseUrl: 'billomat.net', apiKey: 'a valid key' });
+    const api = getBillomatApiClient({ baseUrl: 'billomat.net', apiKey: 'a valid key' });
     const scope = nock(/billomat.net/);
 
     for (const resources of BILLOMAT_RESOURCE_NAMES.filter(isImplemented)) {
@@ -46,19 +43,23 @@ describe('Billomat API', () => {
                 let expectation: any[];
 
                 beforeEach((done: Mocha.Done) => {
-                    fs.readFile(require.resolve(`./test-data/${resources}-list-response.json`), 'utf8', (err, data) => {
-                        if (err) throw err;
-                        const sample = JSON.parse(data) as Record<string, Record<string, any>>;
-                        scope.get(new RegExp(`api/${resources}$`))
-                            .reply(200, sample);
-                        const sampleValue = sample[resources][resource];
-                        expectation       = Array.isArray(sampleValue) ? sampleValue : [sampleValue];
-                        done();
-                    });
+                    fs.readFile(
+                        require.resolve(`./test-data/${resources}-list-response.json`),
+                        'utf8',
+                        (err, data) => {
+                            if (err) throw err;
+                            const sample = JSON.parse(data) as Record<string, Record<string, any>>;
+                            scope.get(new RegExp(`api/${resources}$`)).reply(200, sample);
+                            const sampleValue = sample[resources][resource];
+                            expectation = Array.isArray(sampleValue) ? sampleValue : [sampleValue];
+                            done();
+                        }
+                    );
                 });
 
                 it(`retrieves a list of ${resources}`, (done: Mocha.Done) => {
-                    api[resources].list()
+                    api[resources]
+                        .list()
                         .then((response) => {
                             expect(response).to.deep.equal(expectation);
                             done();
@@ -71,18 +72,24 @@ describe('Billomat API', () => {
                 let expectation: any;
 
                 beforeEach((done: Mocha.Done) => {
-                    fs.readFile(require.resolve(`./test-data/${resources}-get-response.json`), 'utf8', (err, data) => {
-                        if (err) throw err;
-                        const sample = JSON.parse(data) as Record<string, any>;
-                        scope.get(new RegExp(`api/${resources}/${sample[resource].id as string}$`))
-                            .reply(200, sample);
-                        expectation = sample[resource];
-                        done();
-                    });
+                    fs.readFile(
+                        require.resolve(`./test-data/${resources}-get-response.json`),
+                        'utf8',
+                        (err, data) => {
+                            if (err) throw err;
+                            const sample = JSON.parse(data) as Record<string, any>;
+                            scope
+                                .get(new RegExp(`api/${resources}/${sample[resource].id as string}$`))
+                                .reply(200, sample);
+                            expectation = sample[resource];
+                            done();
+                        }
+                    );
                 });
 
                 it(`retrieves an individual ${resource}`, (done: Mocha.Done) => {
-                    api[resources].get(expectation.id)
+                    api[resources]
+                        .get(expectation.id)
                         .then((response) => {
                             expect(response).to.deep.equal(expectation);
                             done();
@@ -103,16 +110,16 @@ describe('Billomat API', () => {
                         (err, data) => {
                             if (err) throw err;
                             const sample = JSON.parse(data);
-                            scope.post(new RegExp(`api/${resources}`))
-                                .reply(201, sample);
+                            scope.post(new RegExp(`api/${resources}`)).reply(201, sample);
                             expectation = sample[resource];
                             done();
-                        },
+                        }
                     );
                 });
 
                 it(`submits a request to create an individual ${resource}`, (done: Mocha.Done) => {
-                    api[resources].create(expectation)
+                    api[resources]
+                        .create(expectation)
                         .then((response) => {
                             expect(response).to.deep.equal(expectation);
                             done();
@@ -131,16 +138,16 @@ describe('Billomat API', () => {
                         (err, data) => {
                             if (err) throw err;
                             const sample = JSON.parse(data);
-                            scope.put(new RegExp(`api/${resources}`))
-                                .reply(200, sample);
+                            scope.put(new RegExp(`api/${resources}`)).reply(200, sample);
                             expectation = sample[resource];
                             done();
-                        },
+                        }
                     );
                 });
 
                 it(`submits a request to change an individual ${resource}`, (done: Mocha.Done) => {
-                    api[resources].edit(expectation)
+                    api[resources]
+                        .edit(expectation)
                         .then((response) => {
                             expect(response).to.deep.equal(expectation);
                             done();
