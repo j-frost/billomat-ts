@@ -205,4 +205,42 @@ export namespace Billomat {
         customfield?: string;
     }
 
+    export interface ConfirmationItem extends Resource {
+        confirmation_id: string;
+        article_id?: string;
+        unit?: string;
+        quantity?: number;
+        unit_price?: number;
+        tax_name?: string;
+        tax_rate?: number;
+        title?: string;
+        description?: string;
+        reduction?: string;
+    }
+
+    export type InitialConfirmationItem = Omit<ConfirmationItem, 'confirmation_id'>;
+
+    export interface Confirmation extends Resource {
+        client_id: string;
+        contact_id?: number;
+        address?: string;
+        number_pre?: string;
+        number?: number;
+        number_length?: number;
+        date?: string;
+        title?: string;
+        label?: string;
+        intro?: string;
+        note?: string;
+        reduction?: string;
+        currency_code?: string;
+        net_gross?: string;
+        quote?: number;
+        offer_id?: number;
+        free_text_id?: number;
+        template_id?: number;
+        'confirmation-items'?: {
+            'confirmation-item': InitialConfirmationItem | InitialConfirmationItem[];
+        };
+    }
 }
