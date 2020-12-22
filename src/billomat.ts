@@ -4,7 +4,6 @@ import { BILLOMAT_RESOURCE_NAMES } from './get-billomat-api-client';
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace Billomat {
-
     export type ResourceName = typeof BILLOMAT_RESOURCE_NAMES[number];
 
     export interface Resource {
