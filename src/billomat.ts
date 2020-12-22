@@ -220,7 +220,7 @@ export namespace Billomat {
 
     export type InitialConfirmationItem = Omit<ConfirmationItem, 'confirmation_id'>;
 
-    export interface ConfirmationResource extends Resource {
+    export interface Confirmation extends Resource {
         client_id: string;
         contact_id?: number;
         address?: string;
