@@ -26,6 +26,7 @@ export interface MappedBillomatResourceType {
     articles: Billomat.Article;
     'client-property-values': Billomat.ClientPropertyValue;
     clients: Billomat.Client;
+    confirmations: Billomat.Confirmation;
     invoices: Billomat.Invoice;
 
     [name: string]: Billomat.Resource;

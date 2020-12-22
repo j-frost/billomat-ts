@@ -53,8 +53,9 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
                 reject('Unsupported resource (no singular defined)');
                 return;
             }
-            const payload = {};
-            Object.defineProperty(payload, singular, resource);
+            const payload = {
+                [singular]: resource,
+            };
             this.createAuthedRequest('POST', `api/${this._name}`)
                 .send(payload)
                 .then((response) => {
@@ -75,8 +76,9 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
                 reject('Unsupported resource (no singular defined)');
                 return;
             }
-            const payload = {};
-            Object.defineProperty(payload, singular, resource);
+            const payload = {
+                [singular]: resource,
+            };
             this.createAuthedRequest('PUT', `api/${this._name}`)
                 .send(payload)
                 .then((response) => {
