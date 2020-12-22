@@ -1,0 +1,47 @@
+{
+  "confirmations": {
+    "id": "221003",
+    "created": "2020-12-22T19:27:55+01:00",
+    "updated": "2020-12-22T19:27:55+01:00",
+    "client_id": "3657393",
+    "contact_id": "",
+    "confirmation_number": "AB1",
+    "number": "",
+    "number_pre": "AB",
+    "number_length": "0",
+    "title": "Auftragsbestätigung [Confirmation.confirmation_number]",
+    "date": "",
+    "address": "Musterfirma\nMax Muster\nMusterstraße 1\nMusterhausen",
+    "status": "DRAFT",
+    "label": "",
+    "intro": "Wir freuen uns über Ihr entgegengebrachtes Vertrauen und möchten Ihnen den folgenden Auftrag bestätigen.",
+    "note": "Wir werden umgehend mit der Bearbeitung Ihres Auftrags beginnen. Für weitere Fragen stehen wir Ihnen gerne zur Verfügung.",
+    "total_net": "0",
+    "total_gross": "0",
+    "reduction": "",
+    "total_reduction": "0",
+    "total_net_unreduced": "0",
+    "total_gross_unreduced": "0",
+    "currency_code": "EUR",
+    "quote": "1",
+    "net_gross": "NET",
+    "taxes": {
+      "tax": {
+        "name": "USt",
+        "rate": "16",
+        "amount": "0",
+        "amount_plain": "0",
+        "amount_rounded": "0",
+        "amount_net": "0",
+        "amount_net_plain": "0",
+        "amount_net_rounded": "0",
+        "amount_gross": "0",
+        "amount_gross_plain": "0",
+        "amount_gross_rounded": "0"
+      }
+    },
+    "offer_id": "",
+    "template_id": "680811",
+    "customfield": ""
+  }
+}
