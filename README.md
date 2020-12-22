@@ -9,7 +9,7 @@
 
 `billomat-ts` is a library that allows TypeScript developers to connect to the popular online accounting software [Billomat](https://www.billomat.com/).
 
-There's realistic mock data for the [client](https://www.billomat.com/en/api/clients/), [client property value](https://www.billomat.com/en/api/clients/properties/), and [invoice data](https://www.billomat.com/en/api/invoices/) types in Billomat's API. It follows that those data types are most likely to work as expected. All other data types are likely to work well though. If you want to contribute, please read [our contributing guidelines](CONTRIBUTING.md).
+There's realistic mock data for the [client](https://www.billomat.com/en/api/clients/), [client property value](https://www.billomat.com/en/api/clients/properties/), [confirmations](https://www.billomat.com/en/api/confirmations/) and [invoice data](https://www.billomat.com/en/api/invoices/) types in Billomat's API. It follows that those data types are most likely to work as expected. All other data types are likely to work well though. If you want to contribute, please read [our contributing guidelines](CONTRIBUTING.md).
 
 ## Prerequisites
 

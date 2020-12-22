@@ -1,6 +1,6 @@
 {
   "name": "billomat-ts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Billomat API implementation in TypeScript for use in Node.js",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
