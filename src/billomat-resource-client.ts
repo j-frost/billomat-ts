@@ -92,6 +92,35 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
         });
     }
 
+    public raw<TResult extends object>(method: string, subUri: string, payload?: object | null, query?: { [key: string]: string }): Promise<TResult> {
+        return new Promise((resolve, reject) => {
+            const singular = SINGULAR.get(this._name);
+            if (singular === undefined) {
+                reject('Unsupported resource (no singular defined)');
+                return;
+            }
+            let uri = `api/${this._name}`;
+            if (subUri) {
+                uri += '/'+subUri;
+            }
+            let req = this.createAuthedRequest(method, uri)
+                .query(query ?? {});
+
+            if (payload) {
+                req = req.send(payload)
+            }
+
+            req.then((response) => {
+                    if (!this.isEditResponse(response.body)) {
+                        reject(`Invalid edit response: ${JSON.stringify(response.body)}`);
+                        return;
+                    }
+                    resolve(response.body as TResult);
+                })
+                .catch(reject);
+        });
+    }
+
     private isListResponse(o: unknown): o is Record<string, Record<string, T>> {
         return typeof o === 'object' && o !== null && this._name in o;
     }
