@@ -247,4 +247,16 @@ export namespace Billomat {
         payload?: Record<string, unknown> | null;
         query?: Record<string, string>;
     }
+
+    export interface PDFResult {
+        pdf: {
+            id: number;
+            created: string;
+            confirmation_id: number;
+            filename: string;
+            mimetype: string;
+            filesize: number;
+            base64file: string;
+        };
+    }
 }
