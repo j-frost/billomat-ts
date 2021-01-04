@@ -242,4 +242,16 @@ export namespace Billomat {
             'confirmation-item': InitialConfirmationItem | InitialConfirmationItem[];
         };
     }
+
+    export interface PDFResult {
+        pdf: {
+            id: number;
+            created: string;
+            confirmation_id: number;
+            filename: string;
+            mimetype: string;
+            filesize: number;
+            base64file: string;
+        };
+    }
 }
