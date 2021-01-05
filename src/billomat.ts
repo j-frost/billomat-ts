@@ -259,4 +259,33 @@ export namespace Billomat {
             base64file: string;
         };
     }
+
+    export interface Supplier extends Resource {
+        name?: string;
+        street?: string;
+        zip?: string;
+        city?: string;
+        state?: string;
+        country_code?: string;
+        first_name?: string;
+        last_name?: string;
+        salutation?: string;
+        phone?: string;
+        fax?: string;
+        mobile?: string;
+        email?: string;
+        www?: string;
+        tax_number?: string;
+        vat_number?: string;
+        creditor_identifier?: string;
+        bank_account_number?: string;
+        bank_account_owner?: string;
+        bank_number?: string;
+        bank_name?: string;
+        bank_swift?: string;
+        bank_iban?: string;
+        note?: string;
+        client_number?: string;
+        currency_code?: string;
+    }
 }
