@@ -92,32 +92,32 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
         });
     }
 
-    public raw<TResult extends object>(method: string, subUri: string, payload?: object | null, query?: { [key: string]: string }): Promise<TResult> {
+    public raw<TResult extends unknown>(
+        method: string,
+        subUri?: string,
+        options?: Billomat.RawOptions
+    ): Promise<TResult> {
         return new Promise((resolve, reject) => {
             const singular = SINGULAR.get(this._name);
             if (singular === undefined) {
                 reject('Unsupported resource (no singular defined)');
                 return;
             }
-            let uri = `api/${this._name}`;
-            if (subUri) {
-                uri += '/'+subUri;
-            }
-            let req = this.createAuthedRequest(method, uri)
-                .query(query ?? {});
 
-            if (payload) {
-                req = req.send(payload)
+            const uri = `api/${this._name}${subUri ? `/${subUri}` : ''}`;
+            let req = this.createAuthedRequest(method, uri).query(options?.query ?? {});
+
+            if (options?.payload) {
+                req = req.send(options.payload);
             }
 
             req.then((response) => {
-                    if (!this.isEditResponse(response.body)) {
-                        reject(`Invalid edit response: ${JSON.stringify(response.body)}`);
-                        return;
-                    }
-                    resolve(response.body as TResult);
-                })
-                .catch(reject);
+                if (!this.isRawResponse(response.body)) {
+                    reject(`Invalid response: ${JSON.stringify(response.body)}`);
+                    return;
+                }
+                resolve(response.body as TResult);
+            }).catch(reject);
         });
     }
 
@@ -134,6 +134,10 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
     }
 
     private isEditResponse(o: unknown): o is Record<string, T> {
+        return typeof o === 'object' && o !== null;
+    }
+
+    private isRawResponse(o: unknown): o is Record<string, T> {
         return typeof o === 'object' && o !== null;
     }
 

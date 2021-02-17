@@ -157,4 +157,18 @@ describe('Billomat API', () => {
             });
         });
     }
+
+    describe('when calling raw', () => {
+        beforeEach(() => scope.get(new RegExp('api/invoices/1')).reply(200, { ok: 'yes' }));
+
+        it('returns response body', (done: Mocha.Done) => {
+            api['invoices']
+                .raw('GET', '1')
+                .then((response) => {
+                    expect(response).to.deep.equal({ ok: 'yes' });
+                    done();
+                })
+                .catch((error) => done(error));
+        });
+    });
 });
