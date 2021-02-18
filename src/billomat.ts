@@ -283,4 +283,9 @@ export namespace Billomat {
         client_number?: string;
         currency_code?: string;
     }
+
+    export interface RawOptions {
+        payload?: Record<string, unknown> | null;
+        query?: Record<string, string>;
+    }
 }
