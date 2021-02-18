@@ -44,7 +44,7 @@ billomat.clients.list()
     .catch(console.error);
 ```
 
-`billomat-ts` currently supports `list`, `get`, `create`, and `edit` operations on all known data types. The `list` functions accept query arguments, etc.
+`billomat-ts` currently supports `list`, `get`, `create`, and `edit` operations on all known data types. The `list` functions accept query arguments, etc. In case these methods don't satisfy your requirements, you can instead use the `raw` method to perform your own requests. 
 
 ## Contact
 

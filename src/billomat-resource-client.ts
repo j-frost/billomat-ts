@@ -6,7 +6,7 @@ import { BillomatApiClientConfig } from './get-billomat-api-client';
 export class BillomatResourceClient<T extends Billomat.Resource> {
     constructor(private _config: BillomatApiClientConfig, private _name: Billomat.ResourceName) {}
 
-    public list(query?: { [key: string]: string }): Promise<T[]> {
+    public list(query?: Record<string, string>): Promise<T[]> {
         return new Promise((resolve, reject) => {
             this.createAuthedRequest('GET', `api/${this._name}`)
                 .query(query || {})
