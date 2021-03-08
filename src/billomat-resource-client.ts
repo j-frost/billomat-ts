@@ -79,7 +79,7 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
             const payload = {
                 [singular]: resource,
             };
-            this.createAuthedRequest('PUT', `api/${this._name}`)
+            this.createAuthedRequest('PUT', `api/${this._name}/${resource.id}`)
                 .send(payload)
                 .then((response) => {
                     if (!this.isEditResponse(response.body)) {
