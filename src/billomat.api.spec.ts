@@ -138,7 +138,7 @@ describe('Billomat API', () => {
                         (err, data) => {
                             if (err) throw err;
                             const sample = JSON.parse(data);
-                            scope.put(new RegExp(`api/${resources}`)).reply(200, sample);
+                            scope.put(new RegExp(`api/${resources}/${sample.id}`)).reply(200, sample);
                             expectation = sample[resource];
                             done();
                         }
