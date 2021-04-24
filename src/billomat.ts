@@ -121,6 +121,30 @@ export namespace Billomat {
         customfield?: string;
     }
 
+    export interface Contact extends Resource {
+        created?: string;
+        updated?: string;
+        client_id: string;
+        label?: string;
+        name?: string;
+        salutation?: string;
+        first_name?: string;
+        last_name?: string;
+        street?: string;
+        zip?: string;
+        city?: string;
+        state?: string;
+        country_code?: string;
+        address?: string;
+        phone?: string;
+        fax?: string;
+        mobile?: string;
+        email?: string;
+        www?: string;
+        locale?: string;
+        customfield?: string;
+    }
+
     export interface Invoice extends Resource {
         created?: string;
         updated?: string;

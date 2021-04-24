@@ -14,6 +14,7 @@ const SINGULAR_OF_RESOURCE = {
     clients: 'client',
     confirmations: 'confirmation',
     countries: 'country',
+    contacts: 'contact',
     'credit-notes': 'credit-note',
     currencies: 'currency',
     'delivery-notes': 'delivery-note',
