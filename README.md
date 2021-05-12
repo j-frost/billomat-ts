@@ -14,9 +14,10 @@ There's realistic mock data for the [client](https://www.billomat.com/en/api/cli
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
-* You have installed the latest version of `node` and `npm`
-* You have read Billomat's own documentation about their API
-* [You have authentication information ready](https://www.billomat.com/en/api/basics/authentication/). [You'll likely want to configure an app inside of Billomat](https://www.billomat.com/en/api/basics/rate-limiting/). Make sure you have the base url to your Billomat instance, and an API key. If you go ahead an configure an app, you can also pass your app secret and app id into `billomat-ts`. 
+
+-   You have installed the latest version of `node` and `npm`
+-   You have read Billomat's own documentation about their API
+-   [You have authentication information ready](https://www.billomat.com/en/api/basics/authentication/). [You'll likely want to configure an app inside of Billomat](https://www.billomat.com/en/api/basics/rate-limiting/). Make sure you have the base url to your Billomat instance, and an API key. If you go ahead an configure an app, you can also pass your app secret and app id into `billomat-ts`.
 
 ## Installing `billomat-ts`
 
@@ -34,17 +35,18 @@ For information on how to use `billomat-ts`, have a look at this example:
 import { Billomat, getBillomatApiClient } from 'billomat-ts';
 import { readFileSync } from 'fs';
 
-const config   = JSON.parse(readFileSync('config.json', 'utf-8'));
+const config = JSON.parse(readFileSync('config.json', 'utf-8'));
 const billomat = getBillomatApiClient(config);
 
-billomat.clients.list()
-    .then((clients: Billomat.Client[]) => clients
-        .map((client: Billomat.Client) => client.name)
-        .map((name) => console.log(name)))
+billomat.clients
+    .list()
+    .then((clients: Billomat.Client[]) =>
+        clients.map((client: Billomat.Client) => client.name).map((name) => console.log(name))
+    )
     .catch(console.error);
 ```
 
-`billomat-ts` currently supports `list`, `get`, `create`, and `edit` operations on all known data types. The `list` functions accept query arguments, etc. In case these methods don't satisfy your requirements, you can instead use the `raw` method to perform your own requests. 
+`billomat-ts` currently supports `list`, `get`, `create`, and `edit` operations on all known data types. The `list` functions accept query arguments, etc. In case these methods don't satisfy your requirements, you can instead use the `raw` method to perform your own requests.
 
 ## Contact
 

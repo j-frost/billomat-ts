@@ -1,11 +1,11 @@
 {
-  "client-property-value": {
-    "id": "6529900",
-    "client_id": "3527529",
-    "client_property_id": "16022",
-    "type": "TEXTFIELD",
-    "name": "G Suite Domain",
-    "value": "example.com",
-    "customfield": ""
-  }
+    "client-property-value": {
+        "id": "6529900",
+        "client_id": "3527529",
+        "client_property_id": "16022",
+        "type": "TEXTFIELD",
+        "name": "G Suite Domain",
+        "value": "example.com",
+        "customfield": ""
+    }
 }
