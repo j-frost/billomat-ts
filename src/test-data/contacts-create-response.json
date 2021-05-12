@@ -1,0 +1,26 @@
+{
+    "contact": {
+        "id": "12345",
+        "created": "2021-04-24T18:12:28+02:00",
+        "updated": "2021-04-24T23:43:37+02:00",
+        "client_id": "1111111",
+        "label": "Kontakt-01",
+        "name": "A dummy contact",
+        "salutation": "",
+        "first_name": "John",
+        "last_name": "Doe",
+        "street": "Musterstraße 1",
+        "zip": "",
+        "city": "Musterhausen",
+        "state": "",
+        "country_code": "DE",
+        "address": "Musterfirma\nMax Muster\nMusterstraße 1\nMusterhausen",
+        "phone": "",
+        "fax": "",
+        "mobile": "",
+        "email": "",
+        "www": "",
+        "locale": "",
+        "customfield": ""
+    }
+}
