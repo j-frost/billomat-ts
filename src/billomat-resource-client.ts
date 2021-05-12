@@ -158,6 +158,7 @@ const SINGULAR = new Map<Billomat.ResourceName, string>([
     ['client-property-values', 'client-property-value'],
     ['confirmations', 'confirmation'],
     ['countries', 'country'],
+    ['contacts', 'contact'],
     ['credit-notes', 'credit-note'],
     ['currencies', 'currency'],
     ['delivery-notes', 'delivery-note'],

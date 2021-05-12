@@ -8,6 +8,7 @@ export const BILLOMAT_RESOURCE_NAMES = [
     'clients',
     'confirmations',
     'countries',
+    'contacts',
     'credit-notes',
     'currencies',
     'delivery-notes',
@@ -27,6 +28,7 @@ export interface MappedBillomatResourceType {
     'client-property-values': Billomat.ClientPropertyValue;
     clients: Billomat.Client;
     confirmations: Billomat.Confirmation;
+    contacts: Billomat.Contact;
     invoices: Billomat.Invoice;
 
     [name: string]: Billomat.Resource;
