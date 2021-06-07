@@ -76,6 +76,12 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
                 reject('Unsupported resource (no singular defined)');
                 return;
             }
+
+            if (!resource.id) {
+                reject('Missing resource id');
+                return;
+            }
+
             const payload = {
                 [singular]: resource,
             };

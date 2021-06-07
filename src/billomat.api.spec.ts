@@ -138,8 +138,15 @@ describe('Billomat API', () => {
                         (err, data) => {
                             if (err) throw err;
                             const sample = JSON.parse(data);
-                            scope.put(new RegExp(`api/${resources}/${sample.id}`)).reply(200, sample);
                             expectation = sample[resource];
+
+                            if (!expectation.id) {
+                                throw new Error('Missing id in resource');
+                            }
+
+                            scope
+                                .put(new RegExp(`api/${resources}/${expectation.id as string}`))
+                                .reply(200, sample);
                             done();
                         }
                     );
