@@ -165,6 +165,7 @@ const SINGULAR = new Map<Billomat.ResourceName, string>([
     ['estimates', 'estimate'],
     ['incomings', 'incoming'],
     ['invoices', 'invoice'],
+    ['invoice-items', 'invoice-item'],
     ['letters', 'letter'],
     ['recurrings', 'recurring'],
     ['reminders', 'reminder'],

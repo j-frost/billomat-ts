@@ -15,6 +15,7 @@ export const BILLOMAT_RESOURCE_NAMES = [
     'estimates',
     'incomings',
     'invoices',
+    'invoice-items',
     'letters',
     'recurrings',
     'reminders',
@@ -30,6 +31,7 @@ export interface MappedBillomatResourceType {
     confirmations: Billomat.Confirmation;
     contacts: Billomat.Contact;
     invoices: Billomat.Invoice;
+    'invoice-items': Billomat.InvoiceItem;
 
     [name: string]: Billomat.Resource;
 }

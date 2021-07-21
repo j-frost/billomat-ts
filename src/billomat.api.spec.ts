@@ -21,6 +21,7 @@ const SINGULAR_OF_RESOURCE = {
     estimates: 'estimate',
     incomings: 'incoming',
     invoices: 'invoice',
+    'invoice-items': 'invoice-item',
     letters: 'letter',
     recurrings: 'recurring',
     reminders: 'reminder',
@@ -30,7 +31,9 @@ const SINGULAR_OF_RESOURCE = {
 };
 
 const isImplemented = (resourceName: ResourceName): boolean =>
-    ['clients', 'client-property-values', 'confirmations', 'contacts', 'invoices'].includes(resourceName);
+    ['clients', 'client-property-values', 'confirmations', 'contacts', 'invoices', 'invoice-items'].includes(
+        resourceName
+    );
 
 describe('Billomat API', () => {
     const api = getBillomatApiClient({ baseUrl: 'billomat.net', apiKey: 'a valid key' });
