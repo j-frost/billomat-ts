@@ -7,7 +7,7 @@ import { Billomat } from './billomat';
 import { BILLOMAT_RESOURCE_NAMES, getBillomatApiClient } from './get-billomat-api-client';
 import ResourceName = Billomat.ResourceName;
 
-const SINGULAR_OF_RESOURCE = {
+const SINGULAR_OF_RESOURCE: { [key: string]: string } = {
     'activity-feed': 'activity',
     articles: 'article',
     'client-property-values': 'client-property-value',
