@@ -16,7 +16,7 @@
                 "client_property_id": "16022",
                 "type": "TEXTFIELD",
                 "name": "G Suite Domain",
-                "value": "seibert-demo.net",
+                "value": "a3re.net",
                 "customfield": ""
             },
             {
@@ -25,7 +25,7 @@
                 "client_property_id": "16022",
                 "type": "TEXTFIELD",
                 "name": "G Suite Domain",
-                "value": "seibert-demo.neth",
+                "value": "a3re.netc",
                 "customfield": ""
             }
         ],

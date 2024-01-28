@@ -1,7 +1,7 @@
-import * as request from 'superagent';
+import request from 'superagent';
 import { SuperAgentRequest } from 'superagent';
-import { Billomat } from './billomat';
-import { BillomatApiClientConfig } from './get-billomat-api-client';
+import { Billomat } from './billomat.js';
+import { BillomatApiClientConfig } from './get-billomat-api-client.js';
 
 export class BillomatResourceClient<T extends Billomat.Resource> {
     constructor(private _config: BillomatApiClientConfig, private _name: Billomat.ResourceName) {}

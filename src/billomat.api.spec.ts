@@ -1,11 +1,15 @@
 // Since we'll be using meta programming extensively to abstract these tests, disable some of our linting rules.
 /* eslint-disable @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access */
 import { expect } from 'chai';
-import * as fs from 'fs';
-import * as nock from 'nock';
-import { Billomat } from './billomat';
-import { BILLOMAT_RESOURCE_NAMES, getBillomatApiClient } from './get-billomat-api-client';
+import { readFile } from 'fs';
+import nock from 'nock';
+import { dirname, resolve } from 'path';
+import { fileURLToPath } from 'url';
+import { Billomat } from './billomat.js';
+import { BILLOMAT_RESOURCE_NAMES, getBillomatApiClient } from './get-billomat-api-client.js';
 import ResourceName = Billomat.ResourceName;
+
+const modulePath = dirname(fileURLToPath(import.meta.url));
 
 const SINGULAR_OF_RESOURCE = {
     'activity-feed': 'activity',
@@ -44,8 +48,8 @@ describe('Billomat API', () => {
                 let expectation: any[];
 
                 beforeEach((done: Mocha.Done) => {
-                    fs.readFile(
-                        require.resolve(`./test-data/${resources}-list-response.json`),
+                    readFile(
+                        resolve(modulePath, `./test-data/${resources}-list-response.json`),
                         'utf8',
                         (err, data) => {
                             if (err) throw err;
@@ -73,8 +77,8 @@ describe('Billomat API', () => {
                 let expectation: any;
 
                 beforeEach((done: Mocha.Done) => {
-                    fs.readFile(
-                        require.resolve(`./test-data/${resources}-get-response.json`),
+                    readFile(
+                        resolve(modulePath, `./test-data/${resources}-get-response.json`),
                         'utf8',
                         (err, data) => {
                             if (err) throw err;
@@ -105,8 +109,8 @@ describe('Billomat API', () => {
                 let expectation: any;
 
                 beforeEach((done: Mocha.Done) => {
-                    fs.readFile(
-                        require.resolve(`./test-data/${resources}-create-response.json`),
+                    readFile(
+                        resolve(modulePath, `./test-data/${resources}-create-response.json`),
                         'utf8',
                         (err, data) => {
                             if (err) throw err;
@@ -133,8 +137,8 @@ describe('Billomat API', () => {
                 let expectation: any;
 
                 beforeEach((done: Mocha.Done) => {
-                    fs.readFile(
-                        require.resolve(`./test-data/${resources}-create-response.json`),
+                    readFile(
+                        resolve(modulePath, `./test-data/${resources}-create-response.json`),
                         'utf8',
                         (err, data) => {
                             if (err) throw err;

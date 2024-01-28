@@ -1,5 +1,5 @@
-import { Billomat } from './billomat';
-import { BillomatResourceClient } from './billomat-resource-client';
+import { Billomat } from './billomat.js';
+import { BillomatResourceClient } from './billomat-resource-client.js';
 
 export const BILLOMAT_RESOURCE_NAMES = [
     'activity-feed',

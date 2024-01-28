@@ -1,6 +1,6 @@
 // Since Billomat has names that we cannot alter, suppress some of our eslint rules in this file.
 /* eslint-disable @typescript-eslint/naming-convention,id-blacklist */
-import { BILLOMAT_RESOURCE_NAMES } from './get-billomat-api-client';
+import { BILLOMAT_RESOURCE_NAMES } from './get-billomat-api-client.js';
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace Billomat {

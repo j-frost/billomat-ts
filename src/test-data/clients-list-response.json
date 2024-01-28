@@ -138,7 +138,7 @@
                         "client_property_id": "16022",
                         "type": "TEXTFIELD",
                         "name": "G Suite Domain",
-                        "value": "seibert-demo.net",
+                        "value": "a3re.net",
                         "customfield": ""
                     }
                 }
@@ -153,7 +153,7 @@
                 "number": "3",
                 "number_pre": "KD",
                 "number_length": "0",
-                "name": "Seibert Demi",
+                "name": "Demo",
                 "salutation": "",
                 "first_name": "",
                 "last_name": "",
@@ -162,7 +162,7 @@
                 "city": "",
                 "state": "",
                 "country_code": "DE",
-                "address": "Seibert Demi",
+                "address": "Demo",
                 "phone": "",
                 "fax": "",
                 "mobile": "",
@@ -209,7 +209,7 @@
                         "client_property_id": "16022",
                         "type": "TEXTFIELD",
                         "name": "G Suite Domain",
-                        "value": "seibert-demo.neth",
+                        "value": "a3re.netc",
                         "customfield": ""
                     }
                 }
