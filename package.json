@@ -60,7 +60,7 @@
     "homepage": "https://github.com/j-frost/billomat-ts/blob/main/README.md",
     "repository": {
         "type": "git",
-        "url": "git@github.com:j-frost/billomat-ts.git",
+        "url": "git+ssh://git@github.com/j-frost/billomat-ts.git",
         "directory": "."
     },
     "files": [
