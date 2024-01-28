@@ -37,16 +37,19 @@
     },
     "scripts": {
         "lint": "eslint . --ext .js,.ts,.spec.js,.spec.ts",
-        "test": "mocha --watch",
-        "test:once": "mocha",
+        "test": "mocha",
         "build": "tsc",
         "prepare": "run-s build",
-        "prepublishOnly": "run-p lint test:once",
+        "prepublishOnly": "run-p lint test",
         "preversion": "run-s lint",
         "version": "git add -A src",
         "postversion": "git push && git push --tags"
     },
-    "author": "Seibert Media GmbH",
+    "author": {
+        "name": "Julian Felix Rost",
+        "email": "j-frost+billomat-ts@a3re.net",
+        "url": "https://a3re.net/"
+    },
     "keywords": [
         "billomat",
         "api",
@@ -55,12 +58,12 @@
     ],
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/seibert-media/billomat-ts/issues"
+        "url": "https://github.com/j-frost/billomat-ts/issues"
     },
-    "homepage": "https://github.com/seibert-media/billomat-ts/blob/master/README.md",
+    "homepage": "https://github.com/j-frost/billomat-ts/blob/main/README.md",
     "repository": {
         "type": "git",
-        "url": "git@github.com:seibert-media/billomat-ts.git",
+        "url": "git@github.com:j-frost/billomat-ts.git",
         "directory": "."
     },
     "files": [
