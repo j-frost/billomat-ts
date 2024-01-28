@@ -1,5 +1,5 @@
 // Since we'll be using meta programming extensively to abstract these tests, disable some of our linting rules.
-/* eslint-disable @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-argument */
 import { expect } from 'chai';
 import { readFile } from 'fs';
 import nock from 'nock';
