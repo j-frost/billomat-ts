@@ -1,3 +1,3 @@
-export * from './get-billomat-api-client';
-export { Billomat } from './billomat';
-export { BillomatResourceClient } from './billomat-resource-client';
+export * from './get-billomat-api-client.js';
+export { Billomat } from './billomat.js';
+export { BillomatResourceClient } from './billomat-resource-client.js';

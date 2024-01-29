@@ -1,10 +1,10 @@
 // Since Billomat has names that we cannot alter, suppress some of our eslint rules in this file.
 /* eslint-disable @typescript-eslint/naming-convention,id-blacklist */
-import { BILLOMAT_RESOURCE_NAMES } from './get-billomat-api-client';
+import { BILLOMAT_RESOURCE_NAMES } from './get-billomat-api-client.js';
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace Billomat {
-    export type ResourceName = typeof BILLOMAT_RESOURCE_NAMES[number];
+    export type ResourceName = (typeof BILLOMAT_RESOURCE_NAMES)[number];
 
     export interface Resource {
         id?: string;
@@ -118,6 +118,30 @@ export namespace Billomat {
         type?: string;
         name?: string;
         value: string;
+        customfield?: string;
+    }
+
+    export interface Contact extends Resource {
+        created?: string;
+        updated?: string;
+        client_id: string;
+        label?: string;
+        name?: string;
+        salutation?: string;
+        first_name?: string;
+        last_name?: string;
+        street?: string;
+        zip?: string;
+        city?: string;
+        state?: string;
+        country_code?: string;
+        address?: string;
+        phone?: string;
+        fax?: string;
+        mobile?: string;
+        email?: string;
+        www?: string;
+        locale?: string;
         customfield?: string;
     }
 

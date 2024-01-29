@@ -1,10 +1,12 @@
-import * as request from 'superagent';
-import { SuperAgentRequest } from 'superagent';
-import { Billomat } from './billomat';
-import { BillomatApiClientConfig } from './get-billomat-api-client';
+import request, { SuperAgentRequest } from 'superagent';
+import { Billomat } from './billomat.js';
+import { BillomatApiClientConfig } from './get-billomat-api-client.js';
 
 export class BillomatResourceClient<T extends Billomat.Resource> {
-    constructor(private _config: BillomatApiClientConfig, private _name: Billomat.ResourceName) {}
+    constructor(
+        private _config: BillomatApiClientConfig,
+        private _name: Billomat.ResourceName
+    ) {}
 
     public list(query?: Record<string, string>): Promise<T[]> {
         return new Promise((resolve, reject) => {
@@ -98,11 +100,7 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
         });
     }
 
-    public raw<TResult extends unknown>(
-        method: string,
-        subUri?: string,
-        options?: Billomat.RawOptions
-    ): Promise<TResult> {
+    public raw<TResult>(method: string, subUri?: string, options?: Billomat.RawOptions): Promise<TResult> {
         return new Promise((resolve, reject) => {
             const singular = SINGULAR.get(this._name);
             if (singular === undefined) {
@@ -164,6 +162,7 @@ const SINGULAR = new Map<Billomat.ResourceName, string>([
     ['client-property-values', 'client-property-value'],
     ['confirmations', 'confirmation'],
     ['countries', 'country'],
+    ['contacts', 'contact'],
     ['credit-notes', 'credit-note'],
     ['currencies', 'currency'],
     ['delivery-notes', 'delivery-note'],
