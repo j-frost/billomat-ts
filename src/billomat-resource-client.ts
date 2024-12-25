@@ -1,18 +1,22 @@
 import request, { SuperAgentRequest } from 'superagent';
 import { Billomat } from './billomat.js';
 import { BillomatApiClientConfig } from './get-billomat-api-client.js';
+import { RateLimitStatistics } from './get-billomat-api-client.js';
 
 export class BillomatResourceClient<T extends Billomat.Resource> {
     constructor(
         private _config: BillomatApiClientConfig,
-        private _name: Billomat.ResourceName
-    ) {}
+        private _name: Billomat.ResourceName,
+        private _updateRateLimitStatistics: (stats: RateLimitStatistics) => void
+    ) {
+    }
 
     public list(query?: Record<string, string>): Promise<T[]> {
         return new Promise((resolve, reject) => {
             this.createAuthedRequest('GET', `api/${this._name}`)
                 .query(query || {})
                 .then((response) => {
+                    this.updateRateLimitStatisticsFromHeaders(response.headers);
                     const singular = SINGULAR.get(this._name);
                     if (singular === undefined) {
                         reject('Unsupported resource (no singular defined)');
@@ -138,7 +142,7 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
     private isRawResponse(o: unknown): o is Record<string, T> {
         return typeof o === 'object' && o !== null;
     }
-
+    
     private createAuthedRequest(method: string, endpoint: string): SuperAgentRequest {
         return request(method, `${this._config.baseUrl}/${endpoint}`)
             .set('Accept', 'application/json')
@@ -146,6 +150,23 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
             .set('X-BillomatApiKey', this._config.apiKey)
             .set('X-AppId', this._config.appId || '')
             .set('X-AppSecret', this._config.appSecret || '');
+    }
+
+    private updateRateLimitStatisticsFromHeaders(headers: Record<string, string | undefined>): void {
+        const limitRemaining = headers['x-rate-limit-remaining']
+            ? parseInt(headers['x-rate-limit-remaining'], 10)
+            : undefined;
+        const limitResetAt = headers['x-rate-limit-reset']
+            ? new Date(parseInt(headers['x-rate-limit-reset'], 10) * 1000)
+            : undefined;
+
+        if (limitRemaining !== undefined && limitResetAt !== undefined) {
+            this._updateRateLimitStatistics({
+                lastRequestAt: new Date(),
+                limitRemaining,
+                limitResetAt,
+            });
+        }
     }
 }
 
