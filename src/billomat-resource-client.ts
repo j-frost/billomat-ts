@@ -1,7 +1,6 @@
 import request, { SuperAgentRequest } from 'superagent';
 import { Billomat } from './billomat.js';
 import { BillomatApiClientConfig } from './get-billomat-api-client.js';
-import { RateLimitStatistics } from './get-billomat-api-client.js';
 
 export class BillomatResourceClient<T extends Billomat.Resource> {
     constructor(

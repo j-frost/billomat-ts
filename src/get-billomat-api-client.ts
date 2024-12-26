@@ -35,14 +35,26 @@ export interface MappedBillomatResourceType {
 }
 
 export type RateLimitStatistics = {
-        lastResponseAt: Date,
-        limitRemaining: number,
-        limitResetAt: Date,
+    /**
+     * Date of the last response of which the statistics were extracted
+     */
+    lastResponseAt: Date,
+    /**
+     * Remaining number of requests
+     */
+    limitRemaining: number,
+    /**
+     * Date when the current limit is going to be reset
+     */
+    limitResetAt: Date,
 }
 
 export type BillomatApiClient = {
     [key in Billomat.ResourceName]: BillomatResourceClient<MappedBillomatResourceType[key]>;
 } & {
+    /**
+     * Provides the rate limit statistics of the last API response
+     */
     rateLimitStatistics: RateLimitStatistics;
 };
 
