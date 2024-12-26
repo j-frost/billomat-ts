@@ -7,7 +7,7 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
     constructor(
         private _config: BillomatApiClientConfig,
         private _name: Billomat.ResourceName,
-        private _updateRateLimitStatistics: (stats: RateLimitStatistics) => void
+        private _updateRateLimitStatistics: (lastResponseAt:Date, limitRemaining:number, limitResetAt:Date) => void
     ) {
     }
 
@@ -37,6 +37,7 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
         return new Promise((resolve, reject) => {
             this.createAuthedRequest('GET', `api/${this._name}/${id}`)
                 .then((response) => {
+                    this.updateRateLimitStatisticsFromHeaders(response.headers);
                     const singular = SINGULAR.get(this._name);
                     if (singular === undefined) {
                         reject('Unsupported resource (no singular defined)');
@@ -65,6 +66,7 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
             this.createAuthedRequest('POST', `api/${this._name}`)
                 .send(payload)
                 .then((response) => {
+                    this.updateRateLimitStatisticsFromHeaders(response.headers);
                     if (!this.isCreateResponse(response.body)) {
                         reject(`Invalid create response: ${JSON.stringify(response.body)}`);
                         return;
@@ -88,6 +90,7 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
             this.createAuthedRequest('PUT', `api/${this._name}`)
                 .send(payload)
                 .then((response) => {
+                    this.updateRateLimitStatisticsFromHeaders(response.headers);
                     if (!this.isEditResponse(response.body)) {
                         reject(`Invalid edit response: ${JSON.stringify(response.body)}`);
                         return;
@@ -114,6 +117,7 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
             }
 
             req.then((response) => {
+                this.updateRateLimitStatisticsFromHeaders(response.headers);
                 if (!this.isRawResponse(response.body)) {
                     reject(`Invalid response: ${JSON.stringify(response.body)}`);
                     return;
@@ -159,13 +163,16 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
         const limitResetAt = headers['x-rate-limit-reset']
             ? new Date(parseInt(headers['x-rate-limit-reset'], 10) * 1000)
             : undefined;
+        const lastResponseAt = headers['date']
+            ? new Date(headers['date'])
+            : new Date();
 
         if (limitRemaining !== undefined && limitResetAt !== undefined) {
-            this._updateRateLimitStatistics({
-                lastRequestAt: new Date(),
+            this._updateRateLimitStatistics(
+                lastResponseAt,
                 limitRemaining,
                 limitResetAt,
-            });
+            );
         }
     }
 }

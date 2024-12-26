@@ -35,7 +35,7 @@ export interface MappedBillomatResourceType {
 }
 
 export type RateLimitStatistics = {
-        lastRequestAt: Date,
+        lastResponseAt: Date,
         limitRemaining: number,
         limitResetAt: Date,
 }
@@ -48,10 +48,10 @@ export type BillomatApiClient = {
 
 export const getBillomatApiClient = (config: BillomatApiClientConfig): BillomatApiClient => {
     const rateLimitStatistics = { } as RateLimitStatistics;
-    const updateRateLimitStatistics = (stats: RateLimitStatistics) => { // Function to update the rateLimit stats.
-        rateLimitStatistics.lastRequestAt = stats.lastRequestAt;
-        rateLimitStatistics.limitRemaining = stats.limitRemaining;
-        rateLimitStatistics.limitResetAt = stats.limitResetAt;        
+    const updateRateLimitStatistics = (lastResponseAt:Date, limitRemaining:number, limitResetAt:Date) => { // Function to update the rateLimit stats.
+        rateLimitStatistics.lastResponseAt = lastResponseAt;
+        rateLimitStatistics.limitRemaining = limitRemaining;
+        rateLimitStatistics.limitResetAt = limitResetAt;        
     };
     const api = { rateLimitStatistics } as BillomatApiClient; // because we're going to modify it right below
     for (const resource of BILLOMAT_RESOURCE_NAMES) {
