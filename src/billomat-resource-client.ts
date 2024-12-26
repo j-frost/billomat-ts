@@ -145,7 +145,7 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
     private isRawResponse(o: unknown): o is Record<string, T> {
         return typeof o === 'object' && o !== null;
     }
-    
+
     private createAuthedRequest(method: string, endpoint: string): SuperAgentRequest {
         return request(method, `${this._config.baseUrl}/${endpoint}`)
             .set('Accept', 'application/json')
