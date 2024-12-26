@@ -57,6 +57,8 @@ The Billomat-API has very strict rate limits that limit the number of requests i
 | `rateLimitStatistics.limitRemaining` | Number of remaining requests |
 | `rateLimitStatistics.limitResetAt` | Date, when the rate limit will be reset |
 
+Please note: The rate limit statistics are only available after the first request.
+
 ## Contact
 
 If you want to contact me you can reach me at [j-frost+billomat-ts@a3re.net](mailto:j-frost+billomat-ts@a3re.net). Also feel free to open an issue if you find a bug or have a question.
