@@ -1,5 +1,5 @@
-import { Billomat } from './billomat.js';
 import { BillomatResourceClient } from './billomat-resource-client.js';
+import { Billomat } from './billomat.js';
 
 export const BILLOMAT_RESOURCE_NAMES = [
     'activity-feed',
@@ -36,18 +36,18 @@ export interface MappedBillomatResourceType {
 
 export type RateLimitStatistics = {
     /**
-     * Date of the last response of which the statistics were extracted
+     * Timestamp of the last response when statistics were extracted
      */
-    lastResponseAt: Date,
+    lastResponseAt?: Date;
     /**
      * Remaining number of requests
      */
-    limitRemaining: number,
+    limitRemaining?: number;
     /**
      * Date when the current limit is going to be reset
      */
-    limitResetAt: Date,
-}
+    limitResetAt?: Date;
+};
 
 export type BillomatApiClient = {
     [key in Billomat.ResourceName]: BillomatResourceClient<MappedBillomatResourceType[key]>;
@@ -59,12 +59,13 @@ export type BillomatApiClient = {
 };
 
 export const getBillomatApiClient = (config: BillomatApiClientConfig): BillomatApiClient => {
-    const rateLimitStatistics = { } as RateLimitStatistics;
-    const updateRateLimitStatistics = (lastResponseAt:Date, limitRemaining:number, limitResetAt:Date) => { // Function to update the rateLimit stats.
+    const rateLimitStatistics: RateLimitStatistics = {};
+    const updateRateLimitStatistics = (lastResponseAt: Date, limitRemaining: number, limitResetAt: Date) => {
         rateLimitStatistics.lastResponseAt = lastResponseAt;
         rateLimitStatistics.limitRemaining = limitRemaining;
-        rateLimitStatistics.limitResetAt = limitResetAt;        
+        rateLimitStatistics.limitResetAt = limitResetAt;
     };
+
     const api = { rateLimitStatistics } as BillomatApiClient; // because we're going to modify it right below
     for (const resource of BILLOMAT_RESOURCE_NAMES) {
         Object.defineProperty(api, resource, {
@@ -72,11 +73,12 @@ export const getBillomatApiClient = (config: BillomatApiClientConfig): BillomatA
                 return new BillomatResourceClient<MappedBillomatResourceType[typeof resource]>(
                     config,
                     resource,
-                    updateRateLimitStatistics,
+                    updateRateLimitStatistics
                 );
             },
         });
     }
+
     return api;
 };
 

@@ -49,15 +49,15 @@ billomat.clients
 
 ## Rate Limits
 
-The Billomat-API has very strict rate limits that limit the number of requests in a specific time range. The current status of the rate limit counters and when this limit will be resetted will automatically be extracted & kept for each request. The statistics can be accessed accessed as attributes of the billomat api client:
+Billomat's API has very strict rate limits that limit the number of requests in a given time range. `billomat-ts` keeps the current status of the rate limit counters as well as the timestamp of when limits will reset for each request. The statistics can be accessed as attributes of `BillomatApiClient`:
 
-| Attribute | Description |
-|---|---|
-| `rateLimitStatistics.lastResponseAt` | Date of the last response (this is where the statistics originated) |
-| `rateLimitStatistics.limitRemaining` | Number of remaining requests |
-| `rateLimitStatistics.limitResetAt` | Date, when the rate limit will be reset |
+| Attribute                            | Description                                                        |
+| ------------------------------------ | ------------------------------------------------------------------ |
+| `rateLimitStatistics.lastResponseAt` | Date of the last response (this is where the statistics originate) |
+| `rateLimitStatistics.limitRemaining` | Number of remaining requests                                       |
+| `rateLimitStatistics.limitResetAt`   | Date when the rate limit will be reset                             |
 
-Please note: The rate limit statistics are only available after the first request.
+**Please note** that rate limit statistics are only available after the first request.
 
 ## Contact
 

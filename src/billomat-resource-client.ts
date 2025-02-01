@@ -6,9 +6,12 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
     constructor(
         private _config: BillomatApiClientConfig,
         private _name: Billomat.ResourceName,
-        private _updateRateLimitStatistics: (lastResponseAt:Date, limitRemaining:number, limitResetAt:Date) => void
-    ) {
-    }
+        private _updateRateLimitStatistics: (
+            lastResponseAt: Date,
+            limitRemaining: number,
+            limitResetAt: Date
+        ) => void
+    ) {}
 
     public list(query?: Record<string, string>): Promise<T[]> {
         return new Promise((resolve, reject) => {
@@ -156,24 +159,30 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
     }
 
     private updateRateLimitStatisticsFromHeaders(headers: Record<string, string | undefined>): void {
-        const limitRemaining = headers['x-rate-limit-remaining']
-            ? parseInt(headers['x-rate-limit-remaining'], 10)
-            : undefined;
-        const limitResetAt = headers['x-rate-limit-reset']
-            ? new Date(parseInt(headers['x-rate-limit-reset'], 10) * 1000)
-            : undefined;
-        const lastResponseAt = headers['date']
-            ? new Date(headers['date'])
-            : new Date();
+        const limitRemaining = parseRateLimitHeader(headers['X-Rate-Limit-Remaining']);
+        const limitResetAt = parseRateLimitReset(headers['X-Rate-Limit-Reset']);
+        const lastResponseAt = parseDateHeader(headers['Date']);
 
         if (limitRemaining !== undefined && limitResetAt !== undefined) {
-            this._updateRateLimitStatistics(
-                lastResponseAt,
-                limitRemaining,
-                limitResetAt,
-            );
+            this._updateRateLimitStatistics(lastResponseAt, limitRemaining, limitResetAt);
         }
     }
+}
+
+function parseRateLimitHeader(headerValue: string | undefined): number | undefined {
+    return headerValue ? +headerValue || undefined : undefined;
+}
+
+function parseRateLimitReset(headerValue: string | undefined): Date | undefined {
+    if (headerValue) {
+        const timestamp = +headerValue;
+        return isNaN(timestamp) ? undefined : new Date(timestamp * 1000);
+    }
+    return undefined;
+}
+
+function parseDateHeader(headerValue: string | undefined): Date {
+    return headerValue ? new Date(headerValue) : new Date();
 }
 
 const SINGULAR = new Map<Billomat.ResourceName, string>([
