@@ -47,6 +47,18 @@ billomat.clients
 
 `billomat-ts` currently supports `list`, `get`, `create`, and `edit` operations on all known data types. The `list` functions accept query arguments, etc. In case these methods don't satisfy your requirements, you can instead use the `raw` method to perform your own requests.
 
+## Rate Limits
+
+Billomat's API has very strict rate limits that limit the number of requests in a given time range. `billomat-ts` keeps the current status of the rate limit counters as well as the timestamp of when limits will reset for each request. The statistics can be accessed as attributes of `BillomatApiClient`:
+
+| Attribute                            | Description                                                        |
+| ------------------------------------ | ------------------------------------------------------------------ |
+| `rateLimitStatistics.lastResponseAt` | Date of the last response (this is where the statistics originate) |
+| `rateLimitStatistics.limitRemaining` | Number of remaining requests                                       |
+| `rateLimitStatistics.limitResetAt`   | Date when the rate limit will be reset                             |
+
+**Please note** that rate limit statistics are only available after the first request.
+
 ## Contact
 
 If you want to contact me you can reach me at [j-frost+billomat-ts@a3re.net](mailto:j-frost+billomat-ts@a3re.net). Also feel free to open an issue if you find a bug or have a question.

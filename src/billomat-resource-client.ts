@@ -5,7 +5,12 @@ import { BillomatApiClientConfig } from './get-billomat-api-client.js';
 export class BillomatResourceClient<T extends Billomat.Resource> {
     constructor(
         private _config: BillomatApiClientConfig,
-        private _name: Billomat.ResourceName
+        private _name: Billomat.ResourceName,
+        private _updateRateLimitStatistics: (
+            lastResponseAt: Date,
+            limitRemaining: number,
+            limitResetAt: Date
+        ) => void
     ) {}
 
     public list(query?: Record<string, string>): Promise<T[]> {
@@ -13,6 +18,7 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
             this.createAuthedRequest('GET', `api/${this._name}`)
                 .query(query || {})
                 .then((response) => {
+                    this.updateRateLimitStatisticsFromHeaders(response.headers);
                     const singular = SINGULAR.get(this._name);
                     if (singular === undefined) {
                         reject('Unsupported resource (no singular defined)');
@@ -33,6 +39,7 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
         return new Promise((resolve, reject) => {
             this.createAuthedRequest('GET', `api/${this._name}/${id}`)
                 .then((response) => {
+                    this.updateRateLimitStatisticsFromHeaders(response.headers);
                     const singular = SINGULAR.get(this._name);
                     if (singular === undefined) {
                         reject('Unsupported resource (no singular defined)');
@@ -61,6 +68,7 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
             this.createAuthedRequest('POST', `api/${this._name}`)
                 .send(payload)
                 .then((response) => {
+                    this.updateRateLimitStatisticsFromHeaders(response.headers);
                     if (!this.isCreateResponse(response.body)) {
                         reject(`Invalid create response: ${JSON.stringify(response.body)}`);
                         return;
@@ -84,6 +92,7 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
             this.createAuthedRequest('PUT', `api/${this._name}`)
                 .send(payload)
                 .then((response) => {
+                    this.updateRateLimitStatisticsFromHeaders(response.headers);
                     if (!this.isEditResponse(response.body)) {
                         reject(`Invalid edit response: ${JSON.stringify(response.body)}`);
                         return;
@@ -110,6 +119,7 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
             }
 
             req.then((response) => {
+                this.updateRateLimitStatisticsFromHeaders(response.headers);
                 if (!this.isRawResponse(response.body)) {
                     reject(`Invalid response: ${JSON.stringify(response.body)}`);
                     return;
@@ -147,6 +157,32 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
             .set('X-AppId', this._config.appId || '')
             .set('X-AppSecret', this._config.appSecret || '');
     }
+
+    private updateRateLimitStatisticsFromHeaders(headers: Record<string, string | undefined>): void {
+        const limitRemaining = parseRateLimitHeader(headers['X-Rate-Limit-Remaining']);
+        const limitResetAt = parseRateLimitReset(headers['X-Rate-Limit-Reset']);
+        const lastResponseAt = parseDateHeader(headers['Date']);
+
+        if (limitRemaining !== undefined && limitResetAt !== undefined) {
+            this._updateRateLimitStatistics(lastResponseAt, limitRemaining, limitResetAt);
+        }
+    }
+}
+
+function parseRateLimitHeader(headerValue: string | undefined): number | undefined {
+    return headerValue ? +headerValue || undefined : undefined;
+}
+
+function parseRateLimitReset(headerValue: string | undefined): Date | undefined {
+    if (headerValue) {
+        const timestamp = +headerValue;
+        return isNaN(timestamp) ? undefined : new Date(timestamp * 1000);
+    }
+    return undefined;
+}
+
+function parseDateHeader(headerValue: string | undefined): Date {
+    return headerValue ? new Date(headerValue) : new Date();
 }
 
 const SINGULAR = new Map<Billomat.ResourceName, string>([
