@@ -159,9 +159,9 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
     }
 
     private updateRateLimitStatisticsFromHeaders(headers: Record<string, string | undefined>): void {
-        const limitRemaining = parseRateLimitHeader(headers['X-Rate-Limit-Remaining']);
-        const limitResetAt = parseRateLimitReset(headers['X-Rate-Limit-Reset']);
-        const lastResponseAt = parseDateHeader(headers['Date']);
+        const limitRemaining = parseRateLimitHeader(headers['x-rate-limit-remaining']);
+        const limitResetAt = parseRateLimitReset(headers['x-rate-limit-reset']);
+        const lastResponseAt = parseDateHeader(headers['date']);
 
         if (limitRemaining !== undefined && limitResetAt !== undefined) {
             this._updateRateLimitStatistics(lastResponseAt, limitRemaining, limitResetAt);
