@@ -151,11 +151,11 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
 
     private createAuthedRequest(method: string, endpoint: string): SuperAgentRequest {
         return request(method, `${this._config.baseUrl}/${endpoint}`)
-            .set('Accept', 'application/json')
-            .set('Content-Type', 'application/json')
-            .set('X-BillomatApiKey', this._config.apiKey)
-            .set('X-AppId', this._config.appId || '')
-            .set('X-AppSecret', this._config.appSecret || '');
+            .set('accept', 'application/json')
+            .set('content-type', 'application/json')
+            .set('x-billomatapikey', this._config.apiKey)
+            .set('x-appid', this._config.appId || '')
+            .set('x-appsecret', this._config.appSecret || '');
     }
 
     private updateRateLimitStatisticsFromHeaders(headers: Record<string, string | undefined>): void {
