@@ -86,10 +86,16 @@ export class BillomatResourceClient<T extends Billomat.Resource> {
                 reject('Unsupported resource (no singular defined)');
                 return;
             }
+
+            if (!resource.id) {
+                reject('Missing resource id');
+                return;
+            }
+
             const payload = {
                 [singular]: resource,
             };
-            this.createAuthedRequest('PUT', `api/${this._name}`)
+            this.createAuthedRequest('PUT', `api/${this._name}/${resource.id}`)
                 .send(payload)
                 .then((response) => {
                     this.updateRateLimitStatisticsFromHeaders(response.headers);
